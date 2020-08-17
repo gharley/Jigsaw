@@ -7,22 +7,22 @@
    <script type="text/javascript" src="./jigsaw.js"></script>
 </head>
 
-<body onload="$('seed').value = Math.random() * 10000; updateseed();">
+<body onload="$('seed').value = Math.random() * 10000; update_range('seed');">
    <table>
       <tr>
          <td>Seed:</td>
-         <td><input id="_seed" type="text" value="0" onchange="update_seed()"/></td>
-         <td><input id="seed" type="range" value="0" min="0" max="9999" step="1" onchange="updateseed()"/></td>
+         <td><input id="_seed" type="text" value="0" onchange="update_text('seed')"/></td>
+         <td><input id="seed" type="range" value="0" min="0" max="9999" step="1" onchange="update_range('seed')"/></td>
       </tr>
       <tr>
          <td>Tab Size:</td>
-         <td><input id="_tabsize" type="text" value="20%" onchange="update_tabsize()"/></td>
-         <td><input id="tabsize" type="range" value="20" min="10" max="30" step="0.1" onchange="updatetabsize()"/></td>
+         <td><input id="_tabsize" type="text" value="20%" onchange="update_text('tabsize')"/></td>
+         <td><input id="tabsize" type="range" value="20" min="10" max="30" step="0.1" onchange="update_range('tabsize')"/></td>
       </tr>
       <tr>
          <td>Jitter:</td>
-         <td><input id="_jitter" type="text" value="4%" onchange="update_jitter()"/></td>
-         <td><input id="jitter" type="range" value="4" min="0" max="13" step="0.1" onchange="updatejitter()"/></td>
+         <td><input id="_jitter" type="text" value="4%" onchange="update_text('jitter')"/></td>
+         <td><input id="jitter" type="range" value="4" min="0" max="13" step="0.1" onchange="update_range('jitter')"/></td>
       </tr>
       <tr>
          <td>Corner Radius:</td>

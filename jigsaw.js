@@ -22,13 +22,8 @@ function uniform(min, max) { var r = random(); return min + r * (max - min); }
 function rbool() { return random() > 0.5; }
 
 function $(id) { return document.getElementById(id); }
-
-function updateseed()     { $("_seed").value =    $("seed").value;          update(); }
-function updatetabsize()  { $("_tabsize").value = $("tabsize").value + "%"; update(); }
-function updatejitter()   { $("_jitter").value =  $("jitter").value + "%";  update(); }
-function update_seed()    { var val = parseFloat($("_seed").value);    if (!isNaN(val)) { $("seed").value = val; }    updateseed(); }
-function update_tabsize() { var val = parseFloat($("_tabsize").value); if (!isNaN(val)) { $("tabsize").value = val; } updatetabsize(); }
-function update_jitter()  { var val = parseFloat($("_jitter").value);  if (!isNaN(val)) { $("jitter").value = val; }  updatejitter(); }
+function update_range(id) { $("_" + id).value = $(id).value + (id === "seed" ? "" : "%"); update(); }
+function update_text(id) { let val = parseFloat($("_" + id).value); if (!isNaN(val)) { $(id).value = val; } update_range(id); }
 
 var a, b, c, d, e, t, j, flip, xi, yi, xn, yn, vertical, offset, width, height, radius;
 function first() { e = uniform(-j, j); next();}
