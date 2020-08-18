@@ -18,16 +18,17 @@ function save(filename, data)
 
 var seed = 1;
 function random() { var x = Math.sin(seed) * 10000; seed += 1; return x - Math.floor(x); }
-function uniform(min, max) { var r = random(); return min + r * (max - min); }
 function rbool() { return random() > 0.5; }
 
 function $(id) { return document.getElementById(id); }
 function update_range(id) { $("_" + id).value = $(id).value + (id === "seed" ? "" : "%"); update(); }
 function update_text(id) { let val = parseFloat($("_" + id).value); if (!isNaN(val)) { $(id).value = val; } update_range(id); }
 
-var a, b, c, d, e, t, j, flip, xi, yi, xn, yn, vertical, offset, width, height, radius;
-function first() { e = uniform(-j, j); next();}
-function next()  { var flipold = flip; flip = rbool(); a = (flip == flipold ? -e: e); b = uniform(-j, j); c = uniform(-j, j); d = uniform(-j, j); e = uniform(-j, j);}
+var a, b, c, d, e, t, jitter, flip, xi, yi, xn, yn, vertical, offset, width, height, radius;
+
+function uniform() { var r = random(); return -jitter + r * (jitter * 2); }
+function first() { e = uniform(); next();}
+function next()  { var flipold = flip; flip = rbool(); a = (flip == flipold ? -e: e); b = c = d = e = uniform();}
 function sl()  { return vertical ? height / yn : width / xn; }
 function sw()  { return vertical ? width / xn : height / yn;}
 function ol()  { return offset + sl() * (vertical ? yi : xi); }
@@ -61,7 +62,7 @@ function gen_d()
    
    seed = parseInt($("seed").value);
    t = parseFloat($("tabsize").value) / 200.0;
-   j = parseFloat($("jitter").value) / 100.0;
+   jitter = parseFloat($("jitter").value) / 100.0;
    xn = parseInt($("xn").value);
    yn = parseInt($("yn").value);
    
