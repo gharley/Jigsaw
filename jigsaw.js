@@ -21,7 +21,7 @@ function $(id) { return document.getElementById(id); }
 function update_range(id) { $("_" + id).value = $(id).value + (id === "seed" ? "" : "%"); update(); }
 function update_text(id) { let val = parseFloat($("_" + id).value); if (!isNaN(val)) { $(id).value = val; } update_range(id); }
 
-var a, b, c, d, e, tabSize, jitter, flip, xi, yi, xn, yn, vertical, offset, width, height, radius;
+var a, b, c, d, e, tabSize, taboffset, jitter, flip, xi, yi, xn, yn, vertical, offset, width, height, radius;
 
 function uniform() { var r = random(); return -jitter + r * (jitter * 2); }
 function first() { e = uniform(); next(); }
@@ -32,26 +32,26 @@ function ol() { return offset + sl() * (vertical ? yi : xi); }
 function ow() { return offset + sw() * (vertical ? xi : yi); }
 function l(v) { var ret = ol() + sl() * v; return Math.round(ret * 100) / 100; }
 function w(v) { var ret = ow() + sw() * v * (flip ? -1.0 : 1.0); return Math.round(ret * 100) / 100; }
-function p0l() { return l(0.0); }
-function p0w() { return w(0.0); }
+// function p0l() { return l(0.0); }
+// function p0w() { return w(0.0); }
 // function p1l() { return l(0.2); }
 // function p1w() { return w(a); }
-function p2l() { return l(0.5 + b + d); }
-function p2w() { return w(-tabSize + c); }
-function p3l() { return l(0.5 - tabSize + b); }
-function p3w() { return w(tabSize + c); }
+// function p2l() { return l(0.5 + b + d); }
+// function p2w() { return w(-tabSize + c); }
+// function p3l() { return l(0.5 - tabSize + b); }
+// function p3w() { return w(tabSize + c); }
 // function p4l() { return l(0.5 - 2.0 * tabSize + b - d); }
 // function p4w() { return w(3.0 * tabSize + c); }
-function p5l() { return l(0.5 + 2.0 * tabSize + b - d); }
-function p5w() { return w(3.0 * tabSize + c); }
-function p6l() { return l(0.5 + tabSize + b); }
-function p6w() { return w(tabSize + c); }
+// function p5l() { return l(0.5 + 2.0 * tabSize + b - d); }
+// function p5w() { return w(3.0 * tabSize + c); }
+// function p6l() { return l(0.5 + tabSize + b); }
+// function p6w() { return w(tabSize + c); }
 // function p7l() { return l(0.5 + b + d); }
 // function p7w() { return w(-tabSize + c); }
-function p8l() { return l(0.8); }
-function p8w() { return w(e); }
-function p9l() { return l(1.0); }
-function p9w() { return w(0.0); }
+// function p8l() { return l(0.8); }
+// function p8w() { return w(e); }
+// function p9l() { return l(1.0); }
+// function p9w() { return w(0.0); }
 
 function gen_tab(x, y, isVertical = false) {
     let xSize = width / xn;
@@ -70,7 +70,7 @@ function gen_tab(x, y, isVertical = false) {
         return Math.round(result * 100) / 100;
     }
 
-    var result = "", xPos, yPos;
+    var result = "";
 
     if (x === 0 || y === 0) {
         first();
@@ -79,11 +79,16 @@ function gen_tab(x, y, isVertical = false) {
 
     // There are 3 curves to a tab, each curve is defined by 3 points but we only need to provide 2 because the first point is the current position
     let points = [];
+    var xDisplace = taboffset;
+    // xDisplace = (xDisplace > 0.65 || xDisplace < 0.35) ? 0.5 : xDisplace;
 
-    points.push({x: lValue(0.5 + b + d), y: wValue(-tabSize + c)});
-    points.push({x: lValue(0.5 - tabSize + b), y: wValue(tabSize + c)});
-    points.push({x: lValue(0.5 + 2.0 * tabSize + b - d), y: wValue(3.0 * tabSize + c)});
-    points.push({x: lValue(0.5 + tabSize + b), y: wValue(tabSize + c)});
+    // First curve
+    points.push({x: lValue(xDisplace + b + d), y: wValue(-tabSize + c)});
+    points.push({x: lValue(xDisplace - tabSize + b), y: wValue(tabSize + c)});
+    // Second curve
+    points.push({x: lValue(xDisplace + 2.0 * tabSize + b - d), y: wValue(3.0 * tabSize + c)});
+    points.push({x: lValue(xDisplace + tabSize + b), y: wValue(tabSize + c)});
+    // Third curve
     points.push({x: lValue(0.8), y: wValue(e)});
     points.push({x: lValue(1.0), y: wValue(0.0)});
 
@@ -98,19 +103,6 @@ function gen_tab(x, y, isVertical = false) {
         result += xVal + " " + yVal + " ";
     }
 
-    // if (isVertical) {
-    //     result += "S " + p2w() + " " + p2l() + " " + p3w() + " " + p3l() + " ";
-    //     result += "S " + p5w() + " " + p5l() + " " + p6w() + " " + p6l() + " ";
-    //     result += "S " + p8w() + " " + p8l() + " " + p9w() + " " + p9l() + " ";
-    // } else {
-    //     result += "S " + lValue(0.5 + b + d) + " " + wValue(-tabSize + c) + " " + lValue(0.5 - tabSize + b) + " " + wValue(tabSize + c) + " ";
-    //     result += "S " + lValue(0.5 + 2.0 * tabSize + b - d) + " " + wValue(3.0 * tabSize + c) + " " + lValue(0.5 + tabSize + b) + " " + wValue(tabSize + c) + " ";
-    //     result += "S " + lValue(0.8) + " " + wValue(e) + " " + lValue(1.0) + " " + wValue(0.0) + " ";
-    //     // result += "S " + p2l() + " " + p2w() + " " + p3l() + " " + p3w() + " ";
-    //     // result += "S " + p5l() + " " + p5w() + " " + p6l() + " " + p6w() + " ";
-    //     // result += "S " + p8l() + " " + p8w() + " " + p9l() + " " + p9w() + " ";
-    // }
-
     return result;
 }
 
@@ -119,6 +111,7 @@ function gen_d() {
 
     seed = parseInt($("seed").value);
     tabSize = parseFloat($("tabsize").value) / 200.0;
+    taboffset = parseFloat($("taboffset").value) / 100.0;
     jitter = parseFloat($("jitter").value) / 100.0;
     xn = parseInt($("xn").value);
     yn = parseInt($("yn").value);
