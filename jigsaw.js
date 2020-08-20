@@ -122,10 +122,23 @@ function gen_d() {
     return str;
 }
 
-function update() {
+const getRadius = () => {
     width = parseInt($("width").value);
     height = parseInt($("height").value);
     radius = parseFloat($("radius").value);
+
+    const minSize = Math.min(width, height) / 2.0;
+
+    if(radius > minSize){
+        radius = minSize;
+        $("radius").value = radius;
+    }
+}
+
+function update() {
+    getRadius();
+    offset = 5.5;
+
     var ratio = 1.0 * width / height;
     if (ratio > 1.5) {
         radius = radius * 900 / width;
@@ -139,14 +152,11 @@ function update() {
     }
     $("puzzlecontainer").setAttribute("width", width + 11);
     $("puzzlecontainer").setAttribute("height", height + 11);
-    offset = 5.5;
     $("puzzlepath").setAttribute("d", gen_d());
 }
 
 function generate() {
-    width = parseInt($("width").value);
-    height = parseInt($("height").value);
-    radius = parseFloat($("radius").value);
+    getRadius();
     offset = 0.0;
 
     var data = "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.0\" ";
