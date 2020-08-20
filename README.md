@@ -9,3 +9,6 @@ New features:
 
     Tab offset - the default tab position is half way across the tile (50%), I added a slider to change it between 40% and 60% but the change is applied randomly.
 
+    Randomized jitter - the jitter factor is now applied randomly.
+
+    

@@ -23,35 +23,9 @@ function update_text(id) { let val = parseFloat($("_" + id).value); if (!isNaN(v
 
 var a, b, c, d, e, tabSize, taboffset, jitter, flip, xi, yi, xn, yn, vertical, offset, width, height, radius;
 
-function uniform() { var r = random(); return -jitter + r * (jitter * 2); }
+function uniform() { var r = random(); return rbool() ? -jitter + r * jitter * 2 : 0.0; }
 function first() { e = uniform(); next(); }
 function next() { var flipold = flip; flip = rbool(); a = (flip == flipold ? -e : e); b = uniform(); c = uniform(); d = uniform(); e = uniform(); }
-function sl() { return vertical ? height / yn : width / xn; }
-function sw() { return vertical ? width / xn : height / yn; }
-function ol() { return offset + sl() * (vertical ? yi : xi); }
-function ow() { return offset + sw() * (vertical ? xi : yi); }
-function l(v) { var ret = ol() + sl() * v; return Math.round(ret * 100) / 100; }
-function w(v) { var ret = ow() + sw() * v * (flip ? -1.0 : 1.0); return Math.round(ret * 100) / 100; }
-// function p0l() { return l(0.0); }
-// function p0w() { return w(0.0); }
-// function p1l() { return l(0.2); }
-// function p1w() { return w(a); }
-// function p2l() { return l(0.5 + b + d); }
-// function p2w() { return w(-tabSize + c); }
-// function p3l() { return l(0.5 - tabSize + b); }
-// function p3w() { return w(tabSize + c); }
-// function p4l() { return l(0.5 - 2.0 * tabSize + b - d); }
-// function p4w() { return w(3.0 * tabSize + c); }
-// function p5l() { return l(0.5 + 2.0 * tabSize + b - d); }
-// function p5w() { return w(3.0 * tabSize + c); }
-// function p6l() { return l(0.5 + tabSize + b); }
-// function p6w() { return w(tabSize + c); }
-// function p7l() { return l(0.5 + b + d); }
-// function p7w() { return w(-tabSize + c); }
-// function p8l() { return l(0.8); }
-// function p8w() { return w(e); }
-// function p9l() { return l(1.0); }
-// function p9w() { return w(0.0); }
 
 function gen_tab(x, y, isVertical = false) {
     let xSize = width / xn;
@@ -80,7 +54,6 @@ function gen_tab(x, y, isVertical = false) {
     // There are 3 curves to a tab, each curve is defined by 3 points but we only need to provide 2 because the first point is the current position
     let points = [];
     var xDisplace = rbool() ? taboffset : 0.5;
-    // xDisplace = (xDisplace > 0.65 || xDisplace < 0.35) ? 0.5 : xDisplace;
 
     // First curve
     points.push({x: lValue(xDisplace + b + d), y: wValue(-tabSize + c)});
@@ -120,16 +93,8 @@ function gen_d() {
     vertical = 0;
     for (yi = 1; yi < yn; ++yi) {
         xi = 0;
-        //   first();
-        //   str += "M " + p0l() + "," + p0w() + " ";
         for (; xi < xn; ++xi) {
             str += gen_tab(xi, yi);
-            //  str += "C " + p1l() + " " + p1w() + " " + p2l() + " " + p2w() + " " + p3l() + " " + p3w() + " ";
-            //  str += "C " + p4l() + " " + p4w() + " " + p5l() + " " + p5w() + " " + p6l() + " " + p6w() + " ";
-            //  str += "C " + p7l() + " " + p7w() + " " + p8l() + " " + p8w() + " " + p9l() + " " + p9w() + " ";
-            //  str += "S " + p2l() + " " + p2w() + " " + p3l() + " " + p3w() + " ";
-            //  str += "S " + p5l() + " " + p5w() + " " + p6l() + " " + p6w() + " ";
-            //  str += "S " + p8l() + " " + p8w() + " " + p9l() + " " + p9w() + " ";
             next();
         }
     }
@@ -138,16 +103,8 @@ function gen_d() {
     vertical = 1;
     for (xi = 1; xi < xn; ++xi) {
         yi = 0;
-        //   first();
-        //   str += "M " + p0w() + "," + p0l() + " ";
         for (; yi < yn; ++yi) {
             str += gen_tab(xi, yi, true);
-            //  str += "C " + p1w() + " " + p1l() + " " + p2w() + " " + p2l() + " " + p3w() + " " + p3l() + " ";
-            //  str += "C " + p4w() + " " + p4l() + " " + p5w() + " " + p5l() + " " + p6w() + " " + p6l() + " ";
-            //  str += "C " + p7w() + " " + p7l() + " " + p8w() + " " + p8l() + " " + p9w() + " " + p9l() + " ";
-            //  str += "S " + p2w() + " " + p2l() + " " + p3w() + " " + p3l() + " ";
-            //  str += "S " + p5w() + " " + p5l() + " " + p6w() + " " + p6l() + " ";
-            //  str += "S " + p8w() + " " + p8l() + " " + p9w() + " " + p9l() + " ";
             next();
         }
     }
