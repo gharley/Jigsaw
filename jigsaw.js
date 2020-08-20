@@ -79,7 +79,7 @@ function gen_tab(x, y, isVertical = false) {
 
     // There are 3 curves to a tab, each curve is defined by 3 points but we only need to provide 2 because the first point is the current position
     let points = [];
-    var xDisplace = taboffset;
+    var xDisplace = rbool() ? taboffset : 0.5;
     // xDisplace = (xDisplace > 0.65 || xDisplace < 0.35) ? 0.5 : xDisplace;
 
     // First curve
