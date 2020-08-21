@@ -14,8 +14,8 @@ function save(filename, data) {
 }
 
 var seed = 1;
-function random() { var x = Math.sin(seed) * 10000; seed += 1; return x - Math.floor(x); }
-function rbool() { return random() > 0.5; }
+const random = () => { var x = Math.sin(seed) * 10000; seed += 1; return x - Math.floor(x); }
+const rbool = () => { return random() > 0.5; }
 
 function $(id) { return document.getElementById(id); }
 function update_range(id) { $("_" + id).value = $(id).value + (id === "seed" ? "" : "%"); update(); }
@@ -23,10 +23,13 @@ function update_text(id) { let val = parseFloat($("_" + id).value); if (!isNaN(v
 
 var a, b, c, d, e, tabSize, taboffset, jitter, flip, xi, yi, xn, yn, vertical, offset, width, height, radius;
 
-function uniform() { var r = random(); return rbool() ? -jitter + r * jitter * 2 : 0.0; }
-function first() { e = uniform(); next(); }
-function next() { var flipold = flip; flip = rbool(); a = (flip == flipold ? -e : e); b = uniform(); c = uniform(); d = uniform(); e = uniform(); }
-
+const uniform = () => { var r = random(); return rbool() ? -jitter + r * jitter * 2 : 0.0; }
+const first = () => { e = uniform(); next(); }
+const next = () => { var flipold = flip; flip = rbool(); a = (flip == flipold ? -e : e); b = uniform(); c = uniform(); d = uniform(); e = uniform(); logem(); }
+const logem = () => {
+    console.log("b =", b, "d =", d, "e =", e);
+    // console.log("a =", a, " b =", b, "c =", c, "d =", d, "e =", e);
+}
 function gen_tab(x, y, isVertical = false) {
     let xSize = width / xn;
     let ySize = height / yn;

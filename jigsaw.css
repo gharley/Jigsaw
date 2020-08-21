@@ -1,3 +1,7 @@
+body{
+    background-color: #eee;
+}
+
 /* Tooltip text */
 .tooltip .tooltiptext {
     display: none;
