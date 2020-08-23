@@ -7,8 +7,8 @@ body {
 }
 
 .tooltip img {
-    height: 1em;
-    width: 1em;
+    height: .8em;
+    width: .8em;
 }
 
 .tooltip .tooltiptext {

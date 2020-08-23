@@ -11,46 +11,46 @@
 <body onload="$('seed').value = Math.random() * 10000; update_range('seed');">
    <table>
       <tr>
+         <td><div class="tooltip"><img src="./Information_icon.svg"/><span class="tooltiptext">A custom randomizing seed that will always produce the same results for a given value.</span></div></td>
          <td>Seed:</td>
          <td><input id="_seed" type="text" value="0" onchange="update_text('seed')"/></td>
          <td><input id="seed" type="range" value="0" min="0" max="9999" step="1" onchange="update_range('seed')"/></td>
-         <td><div class="tooltip"><img src="./Information_icon.svg"/><span class="tooltiptext">A custom randomizing seed that will always produce the same results for a given value.</span></div></td>
       </tr>
       <tr>
+         <td><div class="tooltip"><img src="./Information_icon.svg"/><span class="tooltiptext">The size of the tab on a tile as a fraction of the width or height. Default is 20%, minimum is 10% and max is 30%.</span></div></td>
          <td>Tab Size:</td>
          <td><input id="_tabsize" type="text" value="20%" onchange="update_text('tabsize')"/></td>
          <td><input id="tabsize" type="range" value="20" min="10" max="30" step="0.1" onchange="update_range('tabsize')"/></td>
-         <td><div class="tooltip"><img src="./Information_icon.svg"/><span class="tooltiptext">The size of the tab on a tile as a fraction of the width or height. Default is 20%, minimum is 10% and max is 30%.</span></div></td>
       </tr>
       <tr>
+         <td><div class="tooltip"><img src="./Information_icon.svg"/><span class="tooltiptext">The randomly applied offset of the tab on a tile as a fraction of the width or height. Default is 50%, minimum is 40% and max is 60%.</span></div></td>
          <td>Tab Offset:</td>
          <td><input id="_taboffset" type="text" value="50%" onchange="update_text('taboffset')"/></td>
          <td><input id="taboffset" type="range" value="50" min="0" max="60" step="1.0" onchange="update_range('taboffset')"/></td>
-         <td><div class="tooltip"><img src="./Information_icon.svg"/><span class="tooltiptext">The randomly applied offset of the tab on a tile as a fraction of the width or height. Default is 50%, minimum is 40% and max is 60%.</span></div></td>
       </tr>
       <tr>
+         <td><div class="tooltip"><img src="./Information_icon.svg"/><span class="tooltiptext">The randomly applied shape modifier of the tab on a tile as a fraction of the width or height. Default is 4%, minimum is 0% and max is 13%.</span></div></td>
          <td>Jitter:</td>
          <td><input id="_jitter" type="text" value="4%" onchange="update_text('jitter')"/></td>
          <td><input id="jitter" type="range" value="4" min="0" max="13" step="0.1" onchange="update_range('jitter')"/></td>
-         <td><div class="tooltip"><img src="./Information_icon.svg"/><span class="tooltiptext">The randomly applied shape modifier of the tab on a tile as a fraction of the width or height. Default is 4%, minimum is 0% and max is 13%.</span></div></td>
       </tr>
       <tr>
+         <td><div class="tooltip"><img src="./Information_icon.svg"/><span class="tooltiptext">The radius applied to the corners of the puzzle. 0 will give square corners, max value is 1/2 the smallest size dimension.</span></div></td>
          <td>Corner Radius:</td>
          <td><input id="radius" type="text" value="2.0" size="4" onchange="update()"/> mm</td>
          <td></td>
-         <td><div class="tooltip"><img src="./Information_icon.svg"/><span class="tooltiptext">The radius applied to the corners of the puzzle. 0 will give square corners, max value is 1/2 the smallest size dimension.</span></div></td>
       </tr>
       <tr>
+         <td><div class="tooltip"><img src="./Information_icon.svg"/><span class="tooltiptext">The width and height of the puzzle in terms of tiles.</span></div></td>
          <td>Tiles:</td>
          <td><input id="xn" type="text" value="15" size="4" onchange="update()"/> x <input id="yn" type="text" value="10"  size="4" onchange="update()"/></td>
          <td></td>
-         <td><div class="tooltip"><img src="./Information_icon.svg"/><span class="tooltiptext">The width and height of the puzzle in terms of tiles.</span></div></td>
       </tr>
       <tr>
+         <td><div class="tooltip"><img src="./Information_icon.svg"/><span class="tooltiptext">The width and height in millimeters of the SVG file when saved.</span></div></td>
          <td>Size:</td>
          <td><input id="width" type="text" value="300" size="4" onchange="update()"/> x <input id="height" type="text" value="200"  size="4" onchange="update()"/> mm</td>
          <td><button onclick="generate()">Download SVG</button></td>
-         <td><div class="tooltip"><img src="./Information_icon.svg"/><span class="tooltiptext">The width and height in millimeters of the SVG file when saved.</span></div></td>
       </tr>
    </table>
    <svg id="puzzlecontainer"><path id="puzzlepath" fill="none" stroke="black"></path></svg>

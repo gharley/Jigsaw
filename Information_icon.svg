@@ -9,8 +9,10 @@
 			gradientUnits="userSpaceOnUse"
 			x1="42.9863" y1="7.01270"
 			x2="22.0144" y2="51.9871">
-			<stop offset="0.0" stop-color="#BCD6FE" />
-			<stop offset="1.0" stop-color="#6787D3" />
+			<stop offset="0.0" stop-color="#5555fe" />
+			<!-- <stop offset="0.0" stop-color="#BCD6FE" /> -->
+			<stop offset="1.0" stop-color="#ddddd3" />
+			<!-- <stop offset="1.0" stop-color="#6787D3" /> -->
 		</linearGradient>
 		<linearGradient id="edgeGradient"
 			gradientUnits="userSpaceOnUse"
