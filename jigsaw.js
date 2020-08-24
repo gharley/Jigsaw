@@ -17,17 +17,23 @@ var seed = 1;
 const random = () => { var x = Math.sin(seed) * 10000; seed += 1; return x - Math.floor(x); }
 const rbool = () => { return random() > 0.5; }
 
-function $(id) { return document.getElementById(id); }
-function update_range(id) { $("_" + id).value = $(id).value + (id === "seed" ? "" : "%"); update(); }
-function update_text(id) { let val = parseFloat($("_" + id).value); if (!isNaN(val)) { $(id).value = val; } update_range(id); }
+const $ = (id) => { return document.getElementById(id); }
+const update_range = (id) => { $("_" + id).value = $(id).value + (id === "seed" ? "" : "%"); update(); }
+const update_text = (id) => { let val = parseFloat($("_" + id).value); if (!isNaN(val)) { $(id).value = val; } update_range(id); }
 
-var a, b, c, d, e, tabSize, taboffset, jitter, flip, xi, yi, xn, yn, vertical, offset, width, height, radius;
+var a, b, c, d, e, tabSize, taboffset, randomOffset = false, jitter, randomJitter = false, flip, xi, yi, xn, yn, vertical, offset, width, height, radius;
 
-const uniform = () => { var r = random(); return rbool() ? -jitter + r * jitter * 2 : 0.0; }
+const uniform = () => { 
+    if(randomJitter){
+        jitter = 0.13 * random();
+    }
+    var r = random(); return -jitter + r * jitter * 2; 
+}
+// const uniform = () => { var r = random(); return rbool() ? -jitter + r * jitter * 2 : 0.0; }
 const first = () => { e = uniform(); next(); }
 const next = () => { var flipold = flip; flip = rbool(); a = (flip == flipold ? -e : e); b = uniform(); c = uniform(); d = uniform(); e = uniform(); logem(); }
 const logem = () => {
-    console.log("b =", b, "d =", d, "e =", e);
+    // console.log("b =", b, "d =", d, "e =", e);
     // console.log("a =", a, " b =", b, "c =", c, "d =", d, "e =", e);
 }
 function gen_tab(x, y, isVertical = false) {
@@ -56,7 +62,8 @@ function gen_tab(x, y, isVertical = false) {
 
     // There are 3 curves to a tab, each curve is defined by 3 points but we only need to provide 2 because the first point is the current position
     let points = [];
-    var xDisplace = rbool() ? taboffset : 0.5;
+    var xDisplace = randomOffset ? 0.5 + ((0.3 - tabSize) / 2 * random() * (rbool() ? 1.0 : -1.0)) : taboffset;
+    // var xDisplace = rbool() ? taboffset : 0.5;
 
     // First curve
     points.push({x: lValue(xDisplace + b + d), y: wValue(-tabSize + c)});
@@ -87,7 +94,9 @@ function gen_d() {
 
     seed = parseInt($("seed").value);
     tabSize = parseFloat($("tabsize").value) / 200.0;
+    randomJitter = $("randomjitter").checked
     taboffset = parseFloat($("taboffset").value) / 100.0;
+    randomOffset = $("randomoffset").checked
     jitter = parseFloat($("jitter").value) / 100.0;
     xn = parseInt($("xn").value);
     yn = parseInt($("yn").value);
