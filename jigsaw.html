@@ -20,7 +20,7 @@
          <td><div class="tooltip"><img src="./Information_icon.svg"/><span class="tooltiptext">The size of the tab on a tile as a fraction of the width or height. Default is 20%, minimum is 10% and max is 30%.</span></div></td>
          <td>Tab Size:</td>
          <td><input id="_tabsize" type="text" value="20%" onchange="update_text('tabsize')"/></td>
-         <td><input id="tabsize" type="range" value="20" min="10" max="30" step="0.1" onchange="update_range('tabsize')"/></td>
+         <td><input id="tabsize" type="range" value="20" min="10" max="30" step="0.1" data-default="20" ondblclick="resetValue('tabsize')" onchange="update_range('tabsize')"/></td>
       </tr>
       <tr>
          <td>

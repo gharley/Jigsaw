@@ -31,7 +31,7 @@ const update_range = (id) => {
 }
 const update_text = (id) => { let val = parseFloat($("_" + id).value); if (!isNaN(val)) { $(id).value = val; } update_range(id); }
 
-var tabSize, taboffset, tabRange, randomOffset = false, jitter, randomJitter = false, flip, xn, yn, vertical, offset, width, height, radius;
+var tabSize, taboffset, randomOffset = false, jitter, randomJitter = false, flip, xn, yn, vertical, offset, width, height, radius;
 
 function gen_tab(x, y, isVertical = false) {
     let xSize = width / xn;
@@ -67,7 +67,7 @@ function gen_tab(x, y, isVertical = false) {
 
     // There are 3 curves to a tab, each curve is defined by 3 points but we only need to provide 2 because the first point is the current position
     let points = [];
-    var xDisplace = randomOffset ? 0.5 + (tabRange * random() * (rbool() ? 1.0 : -1.0)) : taboffset;
+    var xDisplace = randomOffset ? 0.5 + ((tabSize - MAX_JITTER * 2) * random() * (rbool() ? 1.0 : -1.0)) : taboffset;
 
     // First curve
     points.push({ x: lValue(xDisplace + b + d), y: wValue(-tabSize + c) });
@@ -95,15 +95,12 @@ function gen_tab(x, y, isVertical = false) {
 
 function gen_d() {
     seed = parseInt($("seed").value);
-    randomJitter = $("randomjitter").checked
-    randomOffset = $("randomoffset").checked
+    randomJitter = $("randomjitter").checked;
+    randomOffset = $("randomoffset").checked;
     jitter = parseFloat($("jitter").value) / 100.0;
     xn = parseInt($("xn").value);
     yn = parseInt($("yn").value);
     tabSize = parseFloat($("tabsize").value) / 200.0;
-
-    const shortSide = Math.min(width / xn, height / yn)
-    tabRange = Math.floor((shortSide - ((tabSize + tabSize * MAX_JITTER) * 3)) / 200.0);
     taboffset = parseFloat($("taboffset").value) / 100.0;
 
     let xi, yi, str = "";
