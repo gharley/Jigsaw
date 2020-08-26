@@ -19,7 +19,7 @@ const random = () => { var x = Math.sin(seed) * 10000; seed += 1; return x - Mat
 const rbool = () => { return random() > 0.5; }
 
 const $ = (id) => { return document.getElementById(id); }
-const resetValue = (id) => { 
+const resetValue = (id) => {
     $(id).value = $(id).dataset["default"];
     update_range(id);
 }
@@ -31,49 +31,43 @@ const update_range = (id) => {
 }
 const update_text = (id) => { let val = parseFloat($("_" + id).value); if (!isNaN(val)) { $(id).value = val; } update_range(id); }
 
-var a, b, c, d, e, tabSize, taboffset, tabRange, randomOffset = false, jitter, randomJitter = false, flip, xi, yi, xn, yn, vertical, offset, width, height, radius;
+var tabSize, taboffset, tabRange, randomOffset = false, jitter, randomJitter = false, flip, xn, yn, vertical, offset, width, height, radius;
 
-const uniform = () => {
-    if (randomJitter) {
-        jitter = MAX_JITTER * random();
-    }
-    var r = random(); return -jitter + r * jitter * 2;
-}
-// const uniform = () => { var r = random(); return rbool() ? -jitter + r * jitter * 2 : 0.0; }
-const first = () => { e = uniform(); next(); }
-const next = () => { var flipold = flip; flip = rbool(); a = (flip == flipold ? -e : e); b = uniform(); c = uniform(); d = uniform(); e = uniform(); logem(); }
-const logem = () => {
-    // console.log("b =", b, "d =", d, "e =", e);
-    // console.log("a =", a, " b =", b, "c =", c, "d =", d, "e =", e);
-}
 function gen_tab(x, y, isVertical = false) {
     let xSize = width / xn;
     let ySize = height / yn;
     let xOffset = offset + xSize * x;
     let yOffset = offset + ySize * y;
+    let result = "";
+    let b, c, d, e;
 
+    const uniform = () => {
+        if (randomJitter) {
+            jitter = MAX_JITTER * random();
+        }
+        var r = random(); return -jitter + r * jitter * 2;
+    }
+    const next = () => { flip = rbool(); b = uniform(); c = uniform(); d = uniform(); e = uniform(); }
     const lValue = (value) => {
         let result = isVertical ? yOffset + value * ySize : xOffset + value * xSize;
         return Math.round(result * 100) / 100;
     }
-
     const wValue = (value) => {
         let reverse = flip ? -1.0 : 1.0;
         let result = isVertical ? xOffset + value * xSize * reverse : yOffset + value * ySize * reverse;
         return Math.round(result * 100) / 100;
     }
 
-    var result = "";
-
     if (x === 0 || y === 0) {
-        first();
         result = "M " + xOffset + " " + yOffset + " ";
     }
+
+    next();
+
 
     // There are 3 curves to a tab, each curve is defined by 3 points but we only need to provide 2 because the first point is the current position
     let points = [];
     var xDisplace = randomOffset ? 0.5 + (tabRange * random() * (rbool() ? 1.0 : -1.0)) : taboffset;
-    // var xDisplace = rbool() ? taboffset : 0.5;
 
     // First curve
     points.push({ x: lValue(xDisplace + b + d), y: wValue(-tabSize + c) });
@@ -90,18 +84,16 @@ function gen_tab(x, y, isVertical = false) {
             result += "S ";
         }
 
-        var xVal = isVertical ? points[idx].y : points[idx].x;
-        var yVal = isVertical ? points[idx].x : points[idx].y;
+        let xVal = isVertical ? points[idx].y : points[idx].x;
+        let yVal = isVertical ? points[idx].x : points[idx].y;
 
         result += xVal + " " + yVal + " ";
     }
-
+    next();
     return result;
 }
 
 function gen_d() {
-    var str = "";
-
     seed = parseInt($("seed").value);
     randomJitter = $("randomjitter").checked
     randomOffset = $("randomoffset").checked
@@ -114,13 +106,14 @@ function gen_d() {
     tabRange = Math.floor((shortSide - ((tabSize + tabSize * MAX_JITTER) * 3)) / 200.0);
     taboffset = parseFloat($("taboffset").value) / 100.0;
 
+    let xi, yi, str = "";
+
     // Draw horizontal lines
     vertical = 0;
     for (yi = 1; yi < yn; ++yi) {
         xi = 0;
         for (; xi < xn; ++xi) {
             str += gen_tab(xi, yi);
-            next();
         }
     }
 
@@ -130,7 +123,6 @@ function gen_d() {
         yi = 0;
         for (; yi < yn; ++yi) {
             str += gen_tab(xi, yi, true);
-            next();
         }
     }
 
