@@ -8,19 +8,19 @@
    <link href="./jigsaw.css" rel="stylesheet">
 </head>
 
-<body onload="$('seed').value = Math.random() * 10000; update_range('seed');">
+<body onload="$('seed').value = Math.random() * 10000; updateRange('seed');">
    <table>
       <tr>
          <td><div class="tooltip"><img src="./Information_icon.svg"/><span class="tooltiptext">A custom randomizing seed that will always produce the same results for a given value.</span></div></td>
          <td>Seed:</td>
-         <td><input id="_seed" type="text" value="0" onchange="update_text('seed')"/></td>
-         <td><input id="seed" type="range" value="0" min="0" max="9999" step="1" onchange="update_range('seed')"/></td>
+         <td><input id="_seed" type="text" value="0" onchange="updateText('seed')"/></td>
+         <td><input id="seed" type="range" value="0" min="0" max="9999" step="1" onchange="updateRange('seed')"/></td>
       </tr>
       <tr>
          <td><div class="tooltip"><img src="./Information_icon.svg"/><span class="tooltiptext">The size of the tab on a tile as a fraction of the width or height. Default is 20%, minimum is 10% and max is 30%.</span></div></td>
          <td>Tab Size:</td>
-         <td><input id="_tabsize" type="text" value="20%" onchange="update_text('tabsize')"/></td>
-         <td><input id="tabsize" type="range" value="20" min="10" max="30" step="0.1" data-default="20" ondblclick="resetValue('tabsize')" onchange="update_range('tabsize')"/></td>
+         <td><input id="_tabsize" type="text" value="20%" onchange="updateText('tabsize')"/></td>
+         <td><input id="tabsize" type="range" value="20" min="10" max="30" step="0.1" data-default="20" ondblclick="resetValue('tabsize')" onchange="updateRange('tabsize')"/></td>
       </tr>
       <tr>
          <td>
@@ -30,21 +30,21 @@
             </div>
          </td>
          <td>Tab Offset:</td>
-         <td><input id="_taboffset" type="text" value="50%" onchange="update_text('taboffset')"/></td>
-         <td><input id="taboffset" type="range" value="50" min="30" max="70" step="1.0" data-default="50" ondblclick="resetValue('taboffset')" onchange="update_range('taboffset')"/></td>
+         <td><input id="_taboffset" type="text" value="50%" onchange="updateText('taboffset')"/></td>
+         <td><input id="taboffset" type="range" value="50" min="30" max="70" step="1.0" data-default="50" ondblclick="resetValue('taboffset')" onchange="updateRange('taboffset')"/></td>
          <td><input id="randomoffset" type="checkbox" onchange="update()"/> Randomize</td>
       </tr>
       <tr>
          <td><div class="tooltip"><img src="./Information_icon.svg"/><span class="tooltiptext">The randomly applied shape modifier of the tab on a tile as a fraction of the width or height. Default is 4%, minimum is 0% and max is 13%.</span></div></td>
          <td>Jitter:</td>
-         <td><input id="_jitter" type="text" value="4%" onchange="update_text('jitter')"/></td>
-         <td><input id="jitter" type="range" value="4" min="0" max="13" step="0.1" data-default="4" ondblclick="resetValue('jitter')" onchange="update_range('jitter')"/></td>
+         <td><input id="_jitter" type="text" value="4%" onchange="updateText('jitter')"/></td>
+         <td><input id="jitter" type="range" value="4" min="0" max="13" step="0.1" data-default="4" ondblclick="resetValue('jitter')" onchange="updateRange('jitter')"/></td>
          <td><input id="randomjitter" type="checkbox" onchange="update()"/> Randomize</td>
       </tr>
       <tr>
          <td><div class="tooltip"><img src="./Information_icon.svg"/><span class="tooltiptext">The radius applied to the corners of the puzzle. 0 will give square corners, max value is 1/2 the smallest size dimension.</span></div></td>
          <td>Corner Radius:</td>
-         <td><input id="radius" type="text" value="2.0" size="4" onchange="update()"/> mm</td>
+         <td><input id="radius" type="text" value="5.0" size="4" onchange="update()"/> mm</td>
          <td></td>
       </tr>
       <tr>
