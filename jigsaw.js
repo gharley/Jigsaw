@@ -45,10 +45,10 @@ function genTab(x, y, props, isVertical = false) {
 
     const uniform = () => {
         if (randomJitter) {
-            jitter = MAX_JITTER * random() * (rbool() ? 1.0 : -1.0);
+            jitter = MAX_JITTER * random();
         }
 
-        return -jitter + random() * jitter * 2;
+        return (-jitter + random() * jitter * 2) * (rbool() ? 1.0 : -1.0);
     }
     const next = () => { flip = rbool(); b = uniform(); c = uniform(); d = uniform(); e = uniform(); }
     const lValue = (value) => {
@@ -70,7 +70,7 @@ function genTab(x, y, props, isVertical = false) {
 
     // There are 3 curves to a tab, each curve is defined by 3 points but we only need to provide 2 because the first point is the current position
     let points = [];
-    let xDisplace = randomOffset ? 0.5 + ((tabSize - MAX_JITTER * 2) * random() * (rbool() ? 1.0 : -1.0)) : taboffset;
+    let xDisplace = 0.5 + (randomOffset ? (tabSize / 2 * random()) : taboffset) * (rbool() ? 1.0 : -1.0);
 
     // First curve
     points.push({ x: lValue(xDisplace + b + d), y: wValue(-tabSize + c) });
