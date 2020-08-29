@@ -17,7 +17,7 @@ chosen between the minimum and maximum values.
 ## How to run
 
 The easiest way to run the app is to download all the files into a single directory 
-and open index.html with your web browser.  Feel free to host on your own site if you like.
+and open jigsaw.html with your web browser.  Feel free to host on your own site if you like.
 
 Be sure to check your resulting pattern closely when applying values close to the extremes 
 as tabs can overlap which is probably not what you want.
